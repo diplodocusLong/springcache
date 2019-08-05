@@ -59,7 +59,6 @@ public class Employee extends Model<Employee> {
     @TableField(fill=FieldFill.INSERT)
     private Integer version;
 
-
     @Override
     protected Serializable pkVal() {
         return this.id;

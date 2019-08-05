@@ -18,4 +18,11 @@ public interface EmployeeService extends IService<Employee> {
     List<Employee> listAll();
 
     Employee addEmployee(Employee employee);
+
+    Employee updateEmployee(Employee employee);
+
+    Employee selectEmployeeById(Integer id);
+
+    Employee deleteEmployee(Integer id);
+
 }

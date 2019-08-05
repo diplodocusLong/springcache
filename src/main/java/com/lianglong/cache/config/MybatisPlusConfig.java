@@ -39,12 +39,17 @@ public class MybatisPlusConfig {
      *
      * 乐观锁
      */
+
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
     }
 
 
+    /**
+     * 逻辑删除
+     * @return
+     */
 
     @Bean
     public ISqlInjector sqlInjector() {

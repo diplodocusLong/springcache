@@ -31,15 +31,22 @@ public class EmployeeController {
      @ApiOperation("查询所有用户")
      public List<Employee>  getAll(){
 
-      return employeeService.listAll();
+        return employeeService.listAll();
 
      }
      @PostMapping
      @ApiOperation("增加一个新员工")
-     public Employee addEmployee(Employee employee){
-        return employeeService.addEmployee(employee);
+     public Employee addEmployee(@RequestBody Employee employee){
+
+         return employeeService.addEmployee(employee);
      }
 
+
+    @PutMapping
+    public Employee updateEmployee(@RequestBody Employee employee){
+
+        return employeeService.updateEmployee(employee);
+    }
 
 }
 

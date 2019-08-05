@@ -6,8 +6,10 @@ import com.lianglong.cache.mapper.EmployeeMapper;
 import com.lianglong.cache.service.EmployeeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
 
     @Override
-    @Cacheable(value="empAll",key="#root.methodName")
+    @Cacheable(value="emp",key="#root.methodName")
     public List<Employee> listAll() {
         return employeeMapper.selectList(new QueryWrapper<>());
     }
@@ -40,6 +42,28 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
          employeeMapper.insert(employee);
 
         return employeeMapper.selectById(employee.getId());
+    }
+
+    @Override
+    @Caching(put = {@CachePut(value="emp",key="#employee.id")},
+            evict = {@CacheEvict(value="emp",key="\"listAll\"",beforeInvocation = true)})
+    public Employee updateEmployee(Employee employee) {
+
+        Employee employeeDB =employeeMapper.selectById(employee.getId());
+
+        employeeDB.setEmpAge(employee.getEmpAge());
+        employeeMapper.updateById(employeeDB);
+         return employeeDB;
+    }
+
+    @Override
+    public Employee selectEmployeeById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Employee deleteEmployee(Integer id) {
+        return null;
     }
 
 
